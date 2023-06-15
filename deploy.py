@@ -6,9 +6,15 @@ st.write("""
           # Malaria Cell Classification
           """
           )
-upload_file = st.sidebar.file_uploader("Upload Cell Images", type="png")
+st.sidebar.header('User Input Parameters')
+try:
+    upload_file = st.sidebar.file_uploader("Upload Cell Images", type="png")
+except:
+    st.write("Please upload an image file")
+
 Generate_pred=st.sidebar.button("Predict")
 model=tf.keras.models.load_model('malaria_cell.h5')
+
 def import_n_pred(image_data, model):
     size = (128,128)
     image = ImageOps.fit(image_data, size, Image.ANTIALIAS)
@@ -20,6 +26,7 @@ def import_n_pred(image_data, model):
         return "Parasitized"
     else:
         return "Uninfected"
+    
 if Generate_pred:
     image=Image.open(upload_file)
     with st.expander('Cell Image', expanded = True):
