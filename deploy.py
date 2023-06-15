@@ -15,22 +15,15 @@ def import_n_pred(image_data, model):
     img = np.asarray(image)
     reshape=img[np.newaxis,...]
     pred = model.predict(reshape)
-    return pred
+    print(pred)
+    if pred[0][0]<0.5:
+        return "Parasitized"
+    else:
+        return "Uninfected"
 if Generate_pred:
     image=Image.open(upload_file)
-    with st.expander('Cell Image', expanded=True):
-        if upload_file is not None:
-            image = Image.open(upload_file)
-            st.image(image, use_column_width=True)
-            pred = import_n_pred(image, model)
-            labels = ['Parasitized', 'Uninfected']
-            st.title("Prediction of image is {}".format(labels[np.argmax(pred)]))
-        if Generate_pred:
-            if upload_file is not None:
-                image = Image.open(upload_file)
-                with st.expander('Cell Image', expanded=True):
-                    st.image(image, use_column_width=True)
-                    pred = import_n_pred(image, model)
-                    labels = ['Parasitized', 'Uninfected']                    
-                    st.title("Prediction of image is {}".format(labels[np.argmax(pred)]))
-
+    with st.expander('Cell Image', expanded = True):
+        st.image(image, use_column_width=True)
+    pred=import_n_pred(image, model)
+    labels = ['Parasitized', 'Uninfected']
+    st.title("Prediction of image is {}".format(pred))
