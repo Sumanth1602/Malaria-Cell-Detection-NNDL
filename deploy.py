@@ -7,11 +7,8 @@ st.write("""
           """
           )
 st.sidebar.header('User Input Parameters')
-try:
-    upload_file = st.sidebar.file_uploader("Upload Cell Images", type="png")
-except:
-    st.write("Please upload an image file")
 
+upload_file = st.sidebar.file_uploader("Upload Cell Images", type="png")
 Generate_pred=st.sidebar.button("Predict")
 model=tf.keras.models.load_model('malaria_cell.h5')
 
@@ -28,9 +25,12 @@ def import_n_pred(image_data, model):
         return "Uninfected"
     
 if Generate_pred:
-    image=Image.open(upload_file)
-    with st.expander('Cell Image', expanded = True):
-        st.image(image, use_column_width=True)
-    pred=import_n_pred(image, model)
-    labels = ['Parasitized', 'Uninfected']
-    st.title("Prediction of image is {}".format(pred))
+    if upload_file is not None:
+        image=Image.open(upload_file)
+        with st.expander('Cell Image', expanded = True):
+            st.image(image, use_column_width=True)
+        pred=import_n_pred(image, model)
+        labels = ['Parasitized', 'Uninfected']
+        st.title("Prediction of image is {}".format(pred))
+    else:
+        st.write("Please upload cell image")
