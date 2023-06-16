@@ -14,7 +14,7 @@ if upload_file is not None:
     st.sidebar.write("File Uploaded Successfully")
 Generate_pred=st.sidebar.button("Predict")
 model1=tf.keras.models.load_model('cnn1.h5')
-model2=tf.keras.models.load_model('vgg19.h5')
+model2=tf.keras.models.load_model('cnn1.h5')
 
 def import_n_pred(image_data, model):
     size = (128,128)
