@@ -36,7 +36,7 @@ def import_n_pred1(image_data, model2):
     img = np.expand_dims(img, axis=0)
     pred = model2.predict(img)
     print(pred[0][0])
-    if pred[0][0]>0.5:
+    if pred[0][0]<0.5:
         return "Parasitized"
     else:
         return "Uninfected"
